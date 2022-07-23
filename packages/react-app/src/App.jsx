@@ -189,17 +189,17 @@ function App(props) {
       writeContracts &&
       mainnetContracts
     ) {
-      console.log("_____________________________________ 🏗 scaffold-eth _____________________________________");
-      console.log("🌎 mainnetProvider", mainnetProvider);
-      console.log("🏠 localChainId", localChainId);
-      console.log("👩‍💼 selected address:", address);
-      console.log("🕵🏻‍♂️ selectedChainId:", selectedChainId);
-      console.log("💵 yourLocalBalance", yourLocalBalance ? ethers.utils.formatEther(yourLocalBalance) : "...");
-      console.log("💵 yourMainnetBalance", yourMainnetBalance ? ethers.utils.formatEther(yourMainnetBalance) : "...");
-      console.log("📝 readContracts", readContracts);
-      console.log("🌍 DAI contract on mainnet:", mainnetContracts);
-      console.log("💵 yourMainnetDAIBalance", myMainnetDAIBalance);
-      console.log("🔐 writeContracts", writeContracts);
+      // console.log("_____________________________________ 🏗 scaffold-eth _____________________________________");
+      // console.log("🌎 mainnetProvider", mainnetProvider);
+      // console.log("🏠 localChainId", localChainId);
+      // console.log("👩‍💼 selected address:", address);
+      // console.log("🕵🏻‍♂️ selectedChainId:", selectedChainId);
+      // console.log("💵 yourLocalBalance", yourLocalBalance ? ethers.utils.formatEther(yourLocalBalance) : "...");
+      // console.log("💵 yourMainnetBalance", yourMainnetBalance ? ethers.utils.formatEther(yourMainnetBalance) : "...");
+      // console.log("📝 readContracts", readContracts);
+      // console.log("🌍 DAI contract on mainnet:", mainnetContracts);
+      // console.log("💵 yourMainnetDAIBalance", myMainnetDAIBalance);
+      // console.log("🔐 writeContracts", writeContracts);
     }
   }, [
     mainnetProvider,
@@ -275,17 +275,7 @@ function App(props) {
           </div>
         </div>
       </Header>
-      {yourLocalBalance.lte(ethers.BigNumber.from("0")) && (
-        <FaucetHint localProvider={localProvider} targetNetwork={targetNetwork} address={address} />
-      )}
-      <NetworkDisplay
-        NETWORKCHECK={NETWORKCHECK}
-        localChainId={localChainId}
-        selectedChainId={selectedChainId}
-        targetNetwork={targetNetwork}
-        logoutOfWeb3Modal={logoutOfWeb3Modal}
-        USE_NETWORK_SELECTOR={USE_NETWORK_SELECTOR}
-      />
+  
       <Menu style={{ textAlign: "center", marginTop: 20 }} selectedKeys={[location.pathname]} mode="horizontal">
         <Menu.Item key="/">
           <Link to="/">App Home</Link>
@@ -310,76 +300,7 @@ function App(props) {
       <Switch>
         <Route exact path="/">
           {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
-          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
-        </Route>
-        <Route exact path="/debug">
-          {/*
-                🎛 this scaffolding is full of commonly used components
-                this <Contract/> component will automatically parse your ABI
-                and give you a form to interact with it locally
-            */}
-
-          <Contract
-            name="YourContract"
-            price={price}
-            signer={userSigner}
-            provider={localProvider}
-            address={address}
-            blockExplorer={blockExplorer}
-            contractConfig={contractConfig}
-          />
-        </Route>
-        <Route path="/hints">
-          <Hints
-            address={address}
-            yourLocalBalance={yourLocalBalance}
-            mainnetProvider={mainnetProvider}
-            price={price}
-          />
-        </Route>
-        <Route path="/exampleui">
-          <ExampleUI
-            address={address}
-            userSigner={userSigner}
-            mainnetProvider={mainnetProvider}
-            localProvider={localProvider}
-            yourLocalBalance={yourLocalBalance}
-            price={price}
-            tx={tx}
-            writeContracts={writeContracts}
-            readContracts={readContracts}
-            purpose={purpose}
-          />
-        </Route>
-        <Route path="/mainnetdai">
-          <Contract
-            name="DAI"
-            customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.DAI}
-            signer={userSigner}
-            provider={mainnetProvider}
-            address={address}
-            blockExplorer="https://etherscan.io/"
-            contractConfig={contractConfig}
-            chainId={1}
-          />
-          {/*
-            <Contract
-              name="UNI"
-              customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.UNI}
-              signer={userSigner}
-              provider={mainnetProvider}
-              address={address}
-              blockExplorer="https://etherscan.io/"
-            />
-            */}
-        </Route>
-        <Route path="/subgraph">
-          <Subgraph
-            subgraphUri={props.subgraphUri}
-            tx={tx}
-            writeContracts={writeContracts}
-            mainnetProvider={mainnetProvider}
-          />
+          <Home yourLocalBalance={yourLocalBalance} readContracts={writeContracts} tx={tx}/>
         </Route>
       </Switch>
 
@@ -411,18 +332,6 @@ function App(props) {
           </Col>
         </Row>
 
-        <Row align="middle" gutter={[4, 4]}>
-          <Col span={24}>
-            {
-              /*  if the local provider has a signer, let's show the faucet:  */
-              faucetAvailable ? (
-                <Faucet localProvider={localProvider} price={price} ensProvider={mainnetProvider} />
-              ) : (
-                ""
-              )
-            }
-          </Col>
-        </Row>
       </div>
     </div>
   );

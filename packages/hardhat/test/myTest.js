@@ -12,29 +12,26 @@ describe("My Dapp", function () {
     setTimeout(done, 2000);
   });
 
-  describe("YourContract", function () {
+  describe("NFTContract", function () {
     it("Should deploy YourContract", async function () {
-      const YourContract = await ethers.getContractFactory("YourContract");
+      const YourContract = await ethers.getContractFactory("NFTContract");
 
       myContract = await YourContract.deploy();
     });
 
-    describe("setPurpose()", function () {
-      it("Should be able to set a new purpose", async function () {
-        const newPurpose = "Test Purpose";
+    describe("createToken", function () {
+      it("Should be able to create toke", async function () {
 
-        await myContract.setPurpose(newPurpose);
-        expect(await myContract.purpose()).to.equal(newPurpose);
+        await myContract.createToken(newPurpose);
+        expect(await myContract._tokenIds).to.equal(0);
       });
 
       it("Should emit a SetPurpose event ", async function () {
         const [owner] = await ethers.getSigners();
 
-        const newPurpose = "Another Test Purpose";
-
-        expect(await myContract.setPurpose(newPurpose))
-          .to.emit(myContract, "SetPurpose")
-          .withArgs(owner.address, newPurpose);
+        expect(await myContract.createToken())
+          .to.emit(myContract, "CreateToken")
+          .withArgs(owner.address);
       });
     });
   });
